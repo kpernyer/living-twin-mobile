@@ -1,26 +1,28 @@
 import 'dart:convert';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../core/auth/auth_service_interface.dart';
 import '../core/error/sentry_config.dart';
 
-class AuthService {
+@LazySingleton(as: IAuthService)
+class AuthService implements IAuthService {
   static const String _userKey = 'user_data';
   static const String _tokenKey = 'auth_token';
   
-  // Singleton pattern
-  static final AuthService _instance = AuthService._internal();
-  factory AuthService() => _instance;
-  AuthService._internal();
+  final SharedPreferences _prefs;
+  
+  AuthService(this._prefs);
 
   // Mock user data for demo purposes
   Map<String, dynamic>? _currentUser;
   String? _authToken;
 
   // Initialize auth service
+  @override
   Future<void> initialize() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final userData = prefs.getString(_userKey);
-      final token = prefs.getString(_tokenKey);
+      final userData = _prefs.getString(_userKey);
+      final token = _prefs.getString(_tokenKey);
       
       if (userData != null) {
         _currentUser = jsonDecode(userData);
@@ -77,9 +79,8 @@ class AuthService {
       final mockToken = 'demo_token_${DateTime.now().millisecondsSinceEpoch}';
 
       // Save to preferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_userKey, jsonEncode(mockUser));
-      await prefs.setString(_tokenKey, mockToken);
+      await _prefs.setString(_userKey, jsonEncode(mockUser));
+      await _prefs.setString(_tokenKey, mockToken);
 
       _currentUser = mockUser;
       _authToken = mockToken;
@@ -146,9 +147,8 @@ class AuthService {
       final mockToken = 'token_${email.hashCode}_${DateTime.now().millisecondsSinceEpoch}';
 
       // Save to preferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_userKey, jsonEncode(mockUser));
-      await prefs.setString(_tokenKey, mockToken);
+      await _prefs.setString(_userKey, jsonEncode(mockUser));
+      await _prefs.setString(_tokenKey, mockToken);
 
       _currentUser = mockUser;
       _authToken = mockToken;
@@ -287,9 +287,8 @@ class AuthService {
       final mockToken = 'token_${email.hashCode}_${DateTime.now().millisecondsSinceEpoch}';
 
       // Save to preferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_userKey, jsonEncode(mockUser));
-      await prefs.setString(_tokenKey, mockToken);
+      await _prefs.setString(_userKey, jsonEncode(mockUser));
+      await _prefs.setString(_tokenKey, mockToken);
 
       _currentUser = mockUser;
       _authToken = mockToken;
@@ -308,16 +307,17 @@ class AuthService {
   }
 
   // Sign out
+  @override
   Future<void> signOut() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_userKey);
-    await prefs.remove(_tokenKey);
+    await _prefs.remove(_userKey);
+    await _prefs.remove(_tokenKey);
     
     _currentUser = null;
     _authToken = null;
   }
 
   // Get ID token (for API calls)
+  @override
   Future<String?> getIdToken() async {
     return _authToken;
   }
@@ -423,9 +423,8 @@ class AuthService {
       final mockToken = 'google_token_${DateTime.now().millisecondsSinceEpoch}';
 
       // Save to preferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_userKey, jsonEncode(mockUser));
-      await prefs.setString(_tokenKey, mockToken);
+      await _prefs.setString(_userKey, jsonEncode(mockUser));
+      await _prefs.setString(_tokenKey, mockToken);
 
       _currentUser = mockUser;
       _authToken = mockToken;
@@ -506,9 +505,8 @@ class AuthService {
       final mockToken = 'aprio_token_${DateTime.now().millisecondsSinceEpoch}';
 
       // Save to preferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_userKey, jsonEncode(mockUser));
-      await prefs.setString(_tokenKey, mockToken);
+      await _prefs.setString(_userKey, jsonEncode(mockUser));
+      await _prefs.setString(_tokenKey, mockToken);
 
       _currentUser = mockUser;
       _authToken = mockToken;

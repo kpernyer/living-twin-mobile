@@ -276,15 +276,15 @@ connect-local:
 
 connect-staging:
 	@echo "🔗 Configuring for staging API..."
-	@echo "API_BASE_URL=https://staging-api.livingtwin.com" > .env.staging
-	@echo "GRAPHQL_URL=https://staging-api.livingtwin.com/graphql" >> .env.staging
-	@echo "✅ Connected to staging API"
+	@echo "API_BASE_URL=https://staging.aprio.one/api" > .env.staging
+	@echo "GRAPHQL_URL=https://staging.aprio.one/api/graphql" >> .env.staging
+	@echo "✅ Connected to staging API (staging.aprio.one)"
 
 connect-prod:
 	@echo "🔗 Configuring for production API..."
-	@echo "API_BASE_URL=https://api.livingtwin.com" > .env.production
-	@echo "GRAPHQL_URL=https://api.livingtwin.com/graphql" >> .env.production
-	@echo "✅ Connected to production API"
+	@echo "API_BASE_URL=https://dev.aprio.one/api" > .env.production
+	@echo "GRAPHQL_URL=https://dev.aprio.one/api/graphql" >> .env.production
+	@echo "✅ Connected to production API (dev.aprio.one)"
 
 # =========================
 # Testing & Quality

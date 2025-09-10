@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'config/app_config.dart';
+import 'core/di/injection.dart';
 import 'core/error/sentry_config.dart';
 import 'features/auth/login_screen.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/home/home_screen.dart';
-import 'services/api_client_enhanced.dart';
 import 'services/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize dependency injection
+  await configureDependencies();
   
   // Initialize Sentry for crash reporting
   await SentryConfig.init();
@@ -81,14 +84,10 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  final ApiClientEnhanced _apiClient = ApiClientEnhanced(
-    baseUrl: AppConfig.apiUrl,
-    authService: AuthService(),
-  );
   
   final List<Widget> _screens = [
-    const HomeScreen(),
-    const ChatScreen(),
+    const HomeScreen(key: ValueKey('home_screen')),
+    const ChatScreen(key: ValueKey('chat_screen')),
   ];
 
   final List<BottomNavigationBarItem> _navItems = [
