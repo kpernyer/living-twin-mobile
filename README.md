@@ -132,10 +132,10 @@ The mobile app connects to the same backend as the web application:
 make connect-local        # http://localhost:8000
 
 # Connect to staging environment  
-make connect-staging      # https://staging-api.livingtwin.com
+make connect-staging      # https://staging.aprio.one/api
 
 # Connect to production
-make connect-prod         # https://api.livingtwin.com
+make connect-prod         # https://dev.aprio.one/api
 ```
 
 ### API Endpoints Used

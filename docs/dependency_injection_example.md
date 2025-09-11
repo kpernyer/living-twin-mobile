@@ -181,7 +181,7 @@ abstract class AppModule {
   
   @Named('baseUrl')
   @prod
-  String get prodUrl => 'https://api.livingtwin.com';
+  String get prodUrl => 'https://dev.aprio.one/api';
 }
 
 // Initialize with environment

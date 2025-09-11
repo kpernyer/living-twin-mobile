@@ -17,7 +17,7 @@ A Flutter mobile application for conversational AI interactions with your organi
 The app automatically selects the appropriate API URL based on the build mode:
 
 - **Development (Debug)**: `http://localhost:8000` (default)
-- **Production (Release)**: `https://api.livingtwin.com`
+- **Production (Release)**: `https://dev.aprio.one/api`
 
 #### Override API URL
 
@@ -28,10 +28,10 @@ You can override the API URL using environment variables:
 flutter run --dart-define=API_URL=http://192.168.1.100:8000
 
 # For staging environment
-flutter run --dart-define=API_URL=https://api-staging.livingtwin.com
+flutter run --dart-define=API_URL=https://staging.aprio.one/api
 
 # For production build
-flutter build apk --dart-define=API_URL=https://api.livingtwin.com
+flutter build apk --dart-define=API_URL=https://dev.aprio.one/api
 ```
 
 #### Firebase Configuration
@@ -128,10 +128,10 @@ flutter run --dart-define=API_URL=https://your-remote-api.com
 
 ```bash
 # Android
-flutter build apk --dart-define=API_URL=https://api.livingtwin.com
+flutter build apk --dart-define=API_URL=https://dev.aprio.one/api
 
 # iOS
-flutter build ios --dart-define=API_URL=https://api.livingtwin.com
+flutter build ios --dart-define=API_URL=https://dev.aprio.one/api
 ```
 
 ## Troubleshooting

@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 
 class AppConfig {
   static const String _devApiUrl = 'http://localhost:8000';
-  static const String _stagingApiUrl = 'https://api-staging.livingtwin.com';
-  static const String _prodApiUrl = 'https://api.livingtwin.com';
+  static const String _stagingApiUrl = 'https://staging.aprio.one/api';
+  static const String _prodApiUrl = 'https://dev.aprio.one/api';
 
   static String get apiUrl {
     if (kDebugMode) {
