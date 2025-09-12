@@ -29,36 +29,18 @@ make dev-android    # Android emulator
 make dev-web        # Web browser (port 3000)
 ```
 
-## 📖 Architecture
+## 📖 System Architecture
 
-```bash
-┌─────────────────────────────────────────────┐
-│             Flutter Mobile App             │
-│                                             │
-│  ┌─────────────┐  ┌─────────────┐          │
-│  │     iOS     │  │   Android   │          │
-│  │ (Objective-C│  │   (Kotlin   │          │
-│  │  + Swift)   │  │   + Java)   │          │
-│  └─────────────┘  └─────────────┘          │
-│                                             │
-│  ┌─────────────────────────────────────────┐ │
-│  │         Flutter Framework (Dart)        │ │
-│  └─────────────────────────────────────────┘ │
-└─────────────────────────────────────────────┘
-                      │
-                      │ REST + GraphQL
-                      ▼
-┌─────────────────────────────────────────────┐
-│          Living Twin Web Platform          │
-│                                             │
-│  API (FastAPI + Strawberry GraphQL)        │
-│  • http://localhost:8000/docs               │
-│  • http://localhost:8000/graphql            │
-│                                             │
-│  Knowledge Graph (Neo4j)                   │
-│  Cache Layer (Redis)                       │
-└─────────────────────────────────────────────┘
-```
+![System Architecture](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/system_architecture.puml)
+
+### Key Components
+
+- **Features Layer**: Auth, Home, Chat, Communication, Pulse, Ingest modules
+- **Core Layer**: Dependency injection, networking, security, caching infrastructure  
+- **Services Layer**: Authentication, API integration, personalization services
+- **Data Layer**: Immutable models with Freezed, secure local storage
+
+📋 [**View Detailed Documentation**](docs/v0.1/README.md) | 🔍 [**System Analysis**](docs/v0.1/system/SYSTEM.md)
 
 ## 🛠️ Development Environment
 
