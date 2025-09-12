@@ -1,0 +1,36 @@
+@startuml Living Twin Mobile - User Flow
+title User Flow - Auto Generated from Code Analysis
+
+actor User
+participant App
+participant "HomeScreen" as home
+participant "ChatScreen" as chat
+participant "AuthScreen" as auth
+participant "IngestScreen" as ingest
+participant "PulseScreen" as pulse
+participant "CommunicationScreen" as communication
+participant "OnboardingScreen" as onboarding
+participant "auth" as authSvc
+participant "speech_service" as speech_serviceSvc
+participant "auth_service_di" as auth_service_diSvc
+participant "api_service" as api_serviceSvc
+participant "api_client_enhanced" as api_client_enhancedSvc
+participant "communication_service" as communication_serviceSvc
+participant "local_storage" as local_storageSvc
+
+== Application Launch ==
+User -> App: Launch app
+App -> App: Initialize DI
+App -> authSvc: initialize()
+
+== Authentication Flow ==
+App -> auth: Show login
+User -> auth: Enter credentials
+auth -> authSvc: signIn()
+authSvc -> auth: Return result
+
+== Main Features ==
+auth -> home: Navigate to home
+User -> chat: Open chat
+
+@enduml

@@ -1,0 +1,90 @@
+@startuml Living Twin Mobile - System Architecture
+!theme plain
+title Living Twin Mobile - Generated System Architecture
+
+package "External Services" {
+  [Living Twin API] as API
+  [AprioOne System] as AprioOne
+  [GetIt DI] as GetItDI
+  [Injectable] as Injectable
+  [Dio HTTP] as DioHTTP
+  [SharedPreferences] as SharedPreferences
+  [Sentry] as Sentry
+}
+
+package "Features Layer" {
+  package "Home" {
+    [home_screen]
+  }
+  package "Chat" {
+    [chat_screen]
+    [conversational_chat_screen]
+  }
+  package "Auth" {
+    [login_screen]
+  }
+  package "Ingest" {
+    [ingest_screen]
+  }
+  package "Pulse" {
+    [pulse_screen]
+  }
+  package "Communication" {
+    [communication_screen]
+  }
+  package "Onboarding" {
+    [organization_setup_screen]
+  }
+}
+
+package "Services Layer" {
+  [auth] as authService
+  [speech_service] as speech_serviceService
+  [auth_service_di] as auth_service_diService
+  [api_service] as api_serviceService
+  [api_client_enhanced] as api_client_enhancedService
+  [communication_service] as communication_serviceService
+  [local_storage] as local_storageService
+}
+
+package "Core Layer" {
+  [api_result]
+  [auth_result]
+  [injection.config]
+  [injection]
+  [cache_manager]
+  [error_handling_mixin]
+  [loading_mixin]
+  [secure_storage_service]
+  [auth_service_interface]
+  [dio_client]
+  [debouncer]
+  [datetime_extensions]
+  [context_extensions]
+  [string_extensions]
+  [api_service_interface]
+  [sentry_config]
+}
+
+package "Data Layer" {
+  [organization.freezed] as organization.freezedModel
+  [organization.g] as organization.gModel
+  [organization] as organizationModel
+  [schema] as schemaModel
+  [goal_model] as goal_modelModel
+  [chat_message] as chat_messageModel
+  [user_model.g] as user_model.gModel
+  [goal_model.freezed] as goal_model.freezedModel
+  [user_model] as user_modelModel
+  [chat_message.freezed] as chat_message.freezedModel
+  [goal_model.g] as goal_model.gModel
+  [chat_message.g] as chat_message.gModel
+  [user_model.freezed] as user_model.freezedModel
+}
+
+Features --> Services
+Services --> Core
+Services --> Data
+Core --> External
+
+@enduml

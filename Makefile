@@ -7,7 +7,7 @@
 # Hybrid Docker + Native toolchain approach
 # =========================
 
-.PHONY: help install setup-ios setup-android dev-ios dev-android dev-web build-ios build-android build-web test lint format clean docker-build docker-run
+.PHONY: help install setup-ios setup-android dev-ios dev-android dev-web build-ios build-android build-web test lint format clean docker-build docker-run uml docs
 
 # Default target
 help:
@@ -60,6 +60,10 @@ help:
 	@echo "  connect-local                           Connect to local Living Twin API (localhost:8000)"
 	@echo "  connect-staging                         Connect to staging API"
 	@echo "  connect-prod                            Connect to production API"
+	@echo ""
+	@echo "📊 System Documentation:"
+	@echo "  uml                                     Generate PlantUML system diagrams"
+	@echo "  docs                                    Generate all documentation"
 	@echo ""
 	@echo "🧹 Maintenance:"
 	@echo "  clean                                   Clean build artifacts"
@@ -357,3 +361,33 @@ hot-reload:
 hot-restart:
 	@echo "🔄 Triggering hot restart..."
 	@echo "R" > /tmp/flutter_input
+
+# =========================
+# System Documentation
+# =========================
+
+uml:
+	@echo "📊 Generating PlantUML system diagrams..."
+	@echo "🔍 Analyzing codebase and generating UML..."
+	dart tools/generate_uml.dart
+	@echo "✅ System documentation generated!"
+	@echo "📖 View: docs/system/SYSTEM.md"
+
+docs: uml
+	@echo "📚 Generating all documentation..."
+	@if [ -f "docs/README.md" ]; then \
+		echo "📝 Documentation index already exists"; \
+	else \
+		echo "📝 Creating documentation index..."; \
+		mkdir -p docs; \
+		echo "# Living Twin Mobile Documentation" > docs/README.md; \
+		echo "" >> docs/README.md; \
+		echo "## System Documentation" >> docs/README.md; \
+		echo "- [System Overview](system/SYSTEM.md) - Auto-generated system architecture" >> docs/README.md; \
+		echo "- [Architecture Assessment](architecture/ARCHITECTURE_ASSESSMENT_REPORT.md)" >> docs/README.md; \
+		echo "" >> docs/README.md; \
+		echo "## Development" >> docs/README.md; \
+		echo "- See [CLAUDE.md](../CLAUDE.md) for development guidelines" >> docs/README.md; \
+		echo "- See [Makefile](../Makefile) for available commands" >> docs/README.md; \
+	fi
+	@echo "✅ Documentation complete!"

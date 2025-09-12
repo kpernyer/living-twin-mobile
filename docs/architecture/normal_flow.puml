@@ -1,0 +1,114 @@
+@startuml Living Twin Mobile Normal Flow
+
+title Living Twin Mobile - Normal User Flow
+
+actor User
+participant "Living Twin App" as App
+participant "AuthWrapper" as Auth
+participant "AuthService" as AuthSvc
+participant "MainScreen" as Main
+participant "HomeScreen" as Home
+participant "ChatScreen" as Chat
+participant "API Service" as API
+participant "Living Twin Backend" as Backend
+participant "Sentry" as Sentry
+
+== App Initialization ==
+User -> App: Launch App
+App -> App: configureDependencies()
+note right: Initialize DI container\nwith GetIt + Injectable
+App -> Sentry: Initialize error tracking
+App -> AuthSvc: initialize()
+AuthSvc -> AuthSvc: Load user from SharedPreferences
+App -> Auth: Check authentication status
+
+alt User Not Authenticated
+  Auth -> App: Show LoginScreen
+  
+  == Authentication Flow ==
+  User -> App: Enter email/password
+  App -> AuthSvc: signInWithEmailAndPassword()
+  AuthSvc -> AuthSvc: Validate credentials
+  AuthSvc -> AuthSvc: checkEmailDomainOrganization()
+  note right: Check if email domain\nis registered with AprioOne
+  
+  alt Organization Found
+    AuthSvc -> AuthSvc: Bind user to organization
+    note right: Auto-bind user based\non email domain
+  end
+  
+  AuthSvc -> AuthSvc: Save user to SharedPreferences
+  AuthSvc -> Sentry: setUser() context
+  AuthSvc -> App: Return success with user data
+  App -> Auth: User authenticated
+  
+else User Already Authenticated
+  Auth -> Main: Show MainScreen
+end
+
+== Main Application Flow ==
+Auth -> Main: Navigate to MainScreen
+Main -> Main: Initialize bottom navigation
+Main -> Home: Show HomeScreen (default)
+
+== Home Screen Flow ==
+Main -> Home: Load HomeScreen
+Home -> API: Fetch dashboard data
+API -> Backend: GET /api/dashboard
+Backend -> API: Return dashboard data
+API -> Home: Display dashboard
+Home -> User: Show personalized content
+
+== Chat Flow ==
+User -> Main: Tap Chat tab
+Main -> Chat: Switch to ChatScreen
+Chat -> API: Fetch chat history
+API -> Backend: GET /api/chat/history
+Backend -> API: Return messages
+API -> Chat: Display messages
+
+User -> Chat: Type message
+Chat -> API: Send message
+API -> Backend: POST /api/chat/send
+Backend -> API: Return response
+API -> Chat: Display AI response
+Chat -> User: Show conversation
+
+== Organization Features ==
+alt User is Organization Admin
+  User -> Main: Tap user avatar
+  Main -> Main: Show user menu
+  User -> Main: Select "Invite Members"
+  Main -> AuthSvc: generateInvitationCode()
+  AuthSvc -> Main: Return invitation code
+  Main -> User: Display invitation code
+end
+
+== Error Handling ==
+alt API Error Occurs
+  API -> Sentry: captureException()
+  API -> Chat: Return error
+  Chat -> User: Show error message
+end
+
+== Offline Support ==
+alt Network Unavailable
+  API -> API: Check cache
+  API -> Chat: Return cached data
+  Chat -> User: Show cached content
+  note right: Offline-first architecture\nwith SQLite cache
+end
+
+== Background Operations ==
+loop Periodic Tasks
+  App -> API: Refresh tokens
+  API -> Backend: Validate session
+  Backend -> API: Return status
+  
+  alt Token Expired
+    API -> AuthSvc: refreshToken()
+    AuthSvc -> API: Return new token
+  end
+end
+
+@enduml

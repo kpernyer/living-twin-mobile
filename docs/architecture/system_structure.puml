@@ -1,0 +1,207 @@
+@startuml Living Twin Mobile System Architecture
+
+!define RECTANGLE class
+
+title Living Twin Mobile - System Architecture
+
+package "Living Twin Mobile App" {
+  
+  package "Presentation Layer" {
+    RECTANGLE MainApp {
+      + LivingTwinApp
+      + AuthWrapper
+      + MainScreen
+    }
+    
+    package "Features" {
+      RECTANGLE AuthFeature {
+        + LoginScreen
+        + SignUpScreen
+        + OnboardingScreen
+      }
+      
+      RECTANGLE HomeFeature {
+        + HomeScreen
+        + Dashboard
+      }
+      
+      RECTANGLE ChatFeature {
+        + ChatScreen
+        + MessageList
+        + InputField
+      }
+      
+      RECTANGLE CommunicationFeature {
+        + Communication
+        + Notifications
+      }
+      
+      RECTANGLE PulseFeature {
+        + PulseScreen
+        + Analytics
+      }
+      
+      RECTANGLE IngestFeature {
+        + IngestScreen
+        + DocumentUpload
+      }
+    }
+  }
+  
+  package "Core Layer" {
+    package "Dependency Injection" {
+      RECTANGLE DI {
+        + GetIt (Service Locator)
+        + Injectable
+        + AppModule
+      }
+    }
+    
+    package "Network" {
+      RECTANGLE NetworkClient {
+        + DioClient
+        + ApiServiceInterface
+        + RetryLogic
+      }
+    }
+    
+    package "Security" {
+      RECTANGLE Security {
+        + SecureStorageService
+        + FlutterSecureStorage
+      }
+    }
+    
+    package "Error Handling" {
+      RECTANGLE ErrorHandling {
+        + SentryConfig
+        + ErrorHandlingMixin
+      }
+    }
+    
+    package "Cache" {
+      RECTANGLE Cache {
+        + CacheManager
+        + SQLite
+        + OfflineSupport
+      }
+    }
+    
+    package "Mixins & Extensions" {
+      RECTANGLE Mixins {
+        + LoadingMixin
+        + ErrorHandlingMixin
+        + DateTimeExtensions
+        + ContextExtensions
+      }
+    }
+  }
+  
+  package "Services Layer" {
+    RECTANGLE AuthService {
+      + Authentication
+      + Authorization
+      + TokenManagement
+      + OrganizationBinding
+    }
+    
+    RECTANGLE ApiService {
+      + HTTP Requests
+      + GraphQL
+      + Error Handling
+    }
+    
+    RECTANGLE PersonalizationService {
+      + UserPreferences
+      + Customization
+    }
+  }
+  
+  package "Data Layer" {
+    package "Models" {
+      RECTANGLE FreezedModels {
+        + Immutable Data Classes
+        + JSON Serialization
+        + User Model
+        + Organization Model
+      }
+    }
+    
+    package "Storage" {
+      RECTANGLE LocalStorage {
+        + SharedPreferences
+        + SecureStorage
+        + SQLite Database
+      }
+    }
+  }
+  
+  package "Configuration" {
+    RECTANGLE AppConfig {
+      + Environment Settings
+      + API Endpoints
+      + Feature Flags
+    }
+  }
+}
+
+package "External Services" {
+  RECTANGLE LivingTwinAPI {
+    + REST Endpoints
+    + GraphQL API
+    + Authentication
+  }
+  
+  RECTANGLE AprioOneSystem {
+    + Organization Management
+    + Domain Registration
+    + Invitation System
+  }
+  
+  RECTANGLE ThirdPartyServices {
+    + Sentry (Error Tracking)
+    + Firebase (Analytics)
+    + Google Sign-In
+  }
+}
+
+package "Platform Services" {
+  RECTANGLE PlatformAPIs {
+    + Speech-to-Text
+    + Text-to-Speech
+    + Biometric Auth
+    + Push Notifications
+  }
+}
+
+' Relationships
+MainApp --> AuthFeature
+MainApp --> HomeFeature
+MainApp --> ChatFeature
+
+AuthFeature --> AuthService
+HomeFeature --> ApiService
+ChatFeature --> ApiService
+
+AuthService --> DI
+ApiService --> DI
+PersonalizationService --> DI
+
+AuthService --> Security
+ApiService --> NetworkClient
+NetworkClient --> Cache
+
+Security --> LocalStorage
+Cache --> LocalStorage
+
+AuthService --> LivingTwinAPI
+ApiService --> LivingTwinAPI
+AuthService --> AprioOneSystem
+
+ErrorHandling --> ThirdPartyServices
+NetworkClient --> ErrorHandling
+
+FreezedModels --> LocalStorage
+AppConfig --> NetworkClient
+
+@enduml

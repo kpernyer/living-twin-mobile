@@ -1,0 +1,67 @@
+@startuml Living Twin Mobile - Component Relationships
+!theme plain
+title Component Dependencies - Auto Generated
+
+component "Living Twin App" as App {
+  [Main] --> [AuthWrapper]
+  [AuthWrapper] --> [LoginScreen]
+  [AuthWrapper] --> [MainScreen]
+}
+
+package "home Feature" {
+  component [home_screen]
+}
+
+package "chat Feature" {
+  component [chat_screen]
+  component [conversational_chat_screen]
+}
+
+package "auth Feature" {
+  component [login_screen]
+}
+
+package "ingest Feature" {
+  component [ingest_screen]
+}
+
+package "pulse Feature" {
+  component [pulse_screen]
+}
+
+package "communication Feature" {
+  component [communication_screen]
+}
+
+package "onboarding Feature" {
+  component [organization_setup_screen]
+}
+
+package "Service Layer" {
+  interface authInterface
+  component [auth]
+  authInterface <|.. auth
+  interface speech_serviceInterface
+  component [speech_service]
+  speech_serviceInterface <|.. speech_service
+  interface auth_service_diInterface
+  component [auth_service_di]
+  auth_service_diInterface <|.. auth_service_di
+  interface api_serviceInterface
+  component [api_service]
+  api_serviceInterface <|.. api_service
+  interface api_client_enhancedInterface
+  component [api_client_enhanced]
+  api_client_enhancedInterface <|.. api_client_enhanced
+  interface communication_serviceInterface
+  component [communication_service]
+  communication_serviceInterface <|.. communication_service
+  interface local_storageInterface
+  component [local_storage]
+  local_storageInterface <|.. local_storage
+}
+
+[AuthWrapper] --> [AuthService]
+[MainScreen] --> [HomeScreen]
+[MainScreen] --> [ChatScreen]
+@enduml
