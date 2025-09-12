@@ -6,7 +6,7 @@ Generated on: 2025-09-12T12:12:36.831537
 
 ## System Architecture
 
-![System Architecture](./system_architecture.png)
+![System Architecture](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/system_architecture.puml)
 
 ### Architecture Layers
 
@@ -117,7 +117,7 @@ Generated on: 2025-09-12T12:12:36.831537
 
 ## Component Relationships
 
-![Component Diagram](./component_diagram.png)
+![Component Diagram](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/component_diagram.puml)
 
 ### Key Dependencies
 - GetIt DI
@@ -128,7 +128,7 @@ Generated on: 2025-09-12T12:12:36.831537
 
 ## User Flows
 
-![User Flow](./user_flow.png)
+![User Flow](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/user_flow.puml)
 
 ### Identified User Journeys
 - Application initialization and dependency injection

@@ -13,21 +13,21 @@ This documentation represents the initial system architecture analysis of the Li
 ### System Architecture
 The overall system structure showing all layers and components:
 
-![System Architecture](./system/Living%20Twin%20Mobile%20System%20Architecture.png)
+![System Architecture](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/system_architecture.puml)
 
 [View PlantUML Source](./system/system_architecture.puml)
 
 ### Component Relationships
 Dependencies between features, services, and core components:
 
-![Component Diagram](./system/Living%20Twin%20Mobile%20Component%20Diagram.png)
+![Component Diagram](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/component_diagram.puml)
 
 [View PlantUML Source](./system/component_diagram.puml)
 
 ### User Flow
 Typical user journey through the application:
 
-![User Flow](./system/Living%20Twin%20Mobile%20User%20Flow.png)
+![User Flow](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kpernyer/living-twin-mobile/main/docs/v0.1/system/user_flow.puml)
 
 [View PlantUML Source](./system/user_flow.puml)
 
